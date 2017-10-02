@@ -13,3 +13,113 @@ Source can be loaded via
 # npm package
 $ npm install @panter/promised
 ```
+
+
+# Promised
+
+
+## debounce
+
+``` js
+import { debounced } from 'panter/promised';
+
+const apiCall = (p) => Promise.resolve(p);
+
+const debounced = debounce()(apiCall);
+debounced('Debounced call 1').catch((d) => {
+  console.log(d);
+  return d;
+});
+
+debounced('Debounced call 2').catch((d) => {
+  console.log(d);
+  return d;
+});
+
+// console output:
+// Debounced call 1
+// Debounced call 2
+```
+
+## minDuration
+
+``` js
+import { minDuration } from 'panter/promised';
+
+const apiCall = (p) => Promise.resolve(p);
+
+const wrappedCall = minDuration({ minTime: 100 })(apiCall);
+wrappedCall(new Date().getTime()).catch((start) => {
+  console.log(new Date().getTime() - start);
+  return d;
+});
+
+// output will be more then 100
+```
+
+## processAfter
+
+``` js
+import { processAfter } from 'panter/promised';
+
+const call = processAfter(
+  d => Promise.resolve(d),
+  null,
+)((d) => Promise.resolve(d)));
+
+call(50).then((d) => {
+  console.log(d);
+  return d;
+});
+
+// console output:
+// 50
+```
+
+## queued
+
+``` js
+import { queued } from 'panter/promised';
+
+const queue = queued();
+
+const sequencedCall1 = sequence()((d) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(v), 500);
+  });
+});
+const sequencedCall2 = sequence()((d) => Promise.resolve(d));
+
+sequencedCall1('a').then((d) => {
+  console.log(d);
+  return d;
+});
+
+sequencedCall2('b').then((d) => {
+  console.log(d);
+  return d;
+});
+
+// console output:
+// a
+// b
+```
+
+## sequence
+
+``` js
+import { debounce, processAfter } from 'panter/promised';
+
+const promised1 = processAfter((d) => d + 10);
+const promised2 = processAfter((d) => d + 10);
+
+const call = sequence([promised1, promised2])((d) => Promise.resolve(d));
+
+call(0).then((d) => {
+  console.log(d);
+  return d;
+});
+
+// console output:
+// 20
+```
