@@ -21,7 +21,7 @@ $ npm install @panter/promised
 ## debounce
 
 ``` js
-import { debounced } from 'panter/promised';
+import { debounced } from '@panter/promised';
 
 const apiCall = (p) => Promise.resolve(p);
 
@@ -44,7 +44,7 @@ debounced('Debounced call 2').catch((d) => {
 ## minDuration
 
 ``` js
-import { minDuration } from 'panter/promised';
+import { minDuration } from '@panter/promised';
 
 const apiCall = (p) => Promise.resolve(p);
 
@@ -60,7 +60,7 @@ wrappedCall(new Date().getTime()).catch((start) => {
 ## processAfter
 
 ``` js
-import { processAfter } from 'panter/promised';
+import { processAfter } from '@panter/promised';
 
 const call = processAfter(
   d => Promise.resolve(d),
@@ -79,7 +79,7 @@ call(50).then((d) => {
 ## queued
 
 ``` js
-import { queued } from 'panter/promised';
+import { queued } from '@panter/promised';
 
 const queue = queued();
 
@@ -108,7 +108,7 @@ sequencedCall2('b').then((d) => {
 ## sequence
 
 ``` js
-import { debounce, processAfter } from 'panter/promised';
+import { debounce, processAfter } from '@panter/promised';
 
 const promised1 = processAfter((d) => d + 10);
 const promised2 = processAfter((d) => d + 10);
