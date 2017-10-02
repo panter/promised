@@ -1,0 +1,20 @@
+{
+  "env": {
+    "browser": true,
+    "mocha": true
+  },
+  "globals": {
+    "expect": true,
+    "isWebkit": true,
+    "waitForUpdate": true,
+    "nextTick": true,
+    "delay": true,
+    "assert": true,
+    "sinon": true,
+    "Promises": true,
+    "delayedPromiseCall": true,
+  },
+  "rules": {
+    "no-unused-expressions": 0
+  }
+}
