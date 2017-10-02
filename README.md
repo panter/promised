@@ -105,6 +105,31 @@ sequencedCall2('b').then((d) => {
 // b
 ```
 
+## retry
+
+``` js
+import { retry } from '@panter/promised';
+
+const onError = d => {
+  console.log('onError');
+  return d === 'retry';
+};
+
+const fn = d => {
+  console.log('call fn');
+  return Promise.reject(d);
+};
+
+const call = retry({ maxRetry: 1, onError })(fn);
+call('retry').catch((d) = console.log(d));
+
+// console output:
+// call fn
+// onError
+// call fn
+// retry
+```
+
 ## sequence
 
 ``` js
