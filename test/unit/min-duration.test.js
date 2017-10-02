@@ -5,7 +5,7 @@ describe('minDuration', () => {
     const start = new Date().getTime();
     const call = minDuration({ minTime: 100 })(v => Promise.resolve(v));
     return call().then((d) => {
-      expect(new Date().getTime() - start).to.be.above(100);
+      expect(new Date().getTime() - start).to.be.above(99);
       return d;
     });
   });
@@ -14,7 +14,7 @@ describe('minDuration', () => {
     const start = new Date().getTime();
     const call = minDuration({ minTime: 100 })(v => Promise.reject(v));
     return call().catch((d) => {
-      expect(new Date().getTime() - start).to.be.above(100);
+      expect(new Date().getTime() - start).to.be.above(99);
       return d;
     });
   });
@@ -23,7 +23,7 @@ describe('minDuration', () => {
     const start = new Date().getTime();
     const call = minDuration({ minTime: 100 })(delayedPromiseCall());
     return call(150).catch((d) => {
-      expect(new Date().getTime() - start).to.be.above(150);
+      expect(new Date().getTime() - start).to.be.above(149);
       return d;
     });
   });
@@ -33,7 +33,7 @@ describe('minDuration', () => {
     const start = new Date().getTime();
     const call = minDuration({ minTime: 100 })(delayedPromiseCall());
     return call(150).then((d) => {
-      expect(new Date().getTime() - start).to.be.above(150);
+      expect(new Date().getTime() - start).to.be.above(149);
       return d;
     });
   });
