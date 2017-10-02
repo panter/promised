@@ -3,6 +3,7 @@
   "description": "promise wrappers for functions",
   "author": "Claudio Romano <cro@panter.ch>",
   "license": "MIT",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/panter/promised.git"

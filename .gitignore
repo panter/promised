@@ -4,4 +4,5 @@ dist/
 lib/
 gh-pages/
 npm-debug.log
+yarn-error.log
 test/coverage
