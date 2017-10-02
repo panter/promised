@@ -1,38 +1,40 @@
 export default function debounce({ delay = 200 } = {}) {
-  let timeoutId = null;
-  const promiseResolve = [];
+  return (fn) => {
+    let timeoutId = null;
+    const promiseResolve = [];
 
-  const processPromise = (isError, currentTimeoutId) => (result) => {
-    if (currentTimeoutId !== timeoutId) { return; }
+    const processPromise = (isError, currentTimeoutId) => (result) => {
+      if (currentTimeoutId !== timeoutId) { return; }
 
-    timeoutId = null;
-    promiseResolve.forEach(({ resolve, reject }) => {
-      if (isError) {
-        reject(result);
-      } else {
-        resolve(result);
-      }
-    });
-    promiseResolve.splice(0, promiseResolve.length);
-  };
+      timeoutId = null;
+      promiseResolve.forEach(({ resolve, reject }) => {
+        if (isError) {
+          reject(result);
+        } else {
+          resolve(result);
+        }
+      });
+      promiseResolve.splice(0, promiseResolve.length);
+    };
 
-  return fn => function fnWrapper(...args) {
-    const callerContext = this;
+    return function fnWrapper(...args) {
+      const callerContext = this;
 
-    return new Promise((resolve, reject) => {
-      promiseResolve.push({ resolve, reject });
-      function execute() {
-        const thisArguments = args;
+      return new Promise((resolve, reject) => {
+        promiseResolve.push({ resolve, reject });
+        function execute() {
+          const thisArguments = args;
 
-        clearTimeout(timeoutId);
-        const currentTimeoutId = timeoutId = setTimeout(() => {
-          fn.apply(this, thisArguments)
+          clearTimeout(timeoutId);
+          const currentTimeoutId = timeoutId = setTimeout(() => {
+            fn.apply(this, thisArguments)
             .then(processPromise(false, currentTimeoutId))
             .catch(processPromise(true, currentTimeoutId));
-        }, delay);
-      }
+          }, delay);
+        }
 
-      execute.apply(callerContext, args);
-    });
+        execute.apply(callerContext, args);
+      });
+    };
   };
 }
