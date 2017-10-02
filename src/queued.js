@@ -1,5 +1,3 @@
-import { includes } from 'lodash';
-
 export class QueuedPromiseError extends Error {
   constructor(result) {
     super('Reject as another request is in the queue');
@@ -14,7 +12,7 @@ export default function queued() {
   const processPromise = (isError, fn, processOnlyOnce) => (result) => {
     const { resolve, reject } = queue.splice(0, 1)[0];
 
-    if (processOnlyOnce && includes(queue.map(({ fn: pfn }) => pfn), fn)) {
+    if (processOnlyOnce && queue.find(({ fn: pfn }) => pfn === fn)) {
       reject(new QueuedPromiseError(result));
     } else if (isError) {
       reject(result);
