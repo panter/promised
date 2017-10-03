@@ -1,5 +1,10 @@
-export default function debounce({ delay = 200 } = {}) {
-  return (fn) => {
+// @flow
+export type PropsType = {
+  delay: number,
+}
+
+export default function debounce({ delay = 200 } : PropsType = {}) {
+  return (fn: Function) => {
     let timeoutId = null;
     const promiseResolve = [];
 
@@ -17,10 +22,10 @@ export default function debounce({ delay = 200 } = {}) {
       promiseResolve.splice(0, promiseResolve.length);
     };
 
-    return function fnWrapper(...args) {
+    return function fnWrapper(...args: []): Promise<any> {
       const callerContext = this;
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve: Function, reject: Function) => {
         promiseResolve.push({ resolve, reject });
         function execute() {
           const thisArguments = args;
