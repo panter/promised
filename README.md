@@ -130,6 +130,37 @@ call('retry').catch((d) = console.log(d));
 // retry
 ```
 
+## waitFor
+
+``` js
+import { waitFor } from '@panter/promised';
+
+const waitForFn = waitFor();
+const mainFunc = waitForFn.main((v) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(v), 500);
+  });
+});
+const waitForMainFunc = waitForFn.addChild(v => Promise.resolve(v));
+
+mainFunc('main1').then((v) => {
+  console.log(v);
+})
+
+waitForMainFunc('waitForFunc').then((v) => {
+  console.log(v);
+})
+
+mainFunc('main2').then((v) => {
+  console.log(v);
+})
+
+// output
+// main1
+// main2
+// waitForFunc
+```
+
 ## sequence
 
 ``` js

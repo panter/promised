@@ -3,6 +3,7 @@ import queued from './queued';
 import minDuration from './min-duration';
 import processAfter from './process-after';
 import retry from './retry';
+import waitFor from './waitFor';
 import sequence from './sequence';
 
 export default {
@@ -11,5 +12,6 @@ export default {
   minDuration,
   processAfter,
   retry,
+  waitFor,
   sequence,
 };
