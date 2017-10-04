@@ -1,9 +1,18 @@
+// @flow
 /* eslint no-use-before-define: ["error", { "functions": false }]*/
+/* eslint-disable no-unused-vars */
+
+export type PropsType = {
+  maxRetry: number,
+  onError: (result?:any) => boolean,
+  onSuccess: (result?:any) => boolean,
+}
+
 export default function retry({
     maxRetry = 3,
     onError = () => true,
-    onSuccess = () => false } = {}) {
-  return fn => function fnWrapper(...args) {
+    onSuccess = () => false }: PropsType = {}) {
+  return (fn: Function) => function fnWrapper(...args: []): Promise<any> {
     const callerContext = this;
 
     return new Promise((resolve, reject) => {

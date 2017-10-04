@@ -1,5 +1,9 @@
+// @flow
+
 export class QueuedPromiseError extends Error {
-  constructor(result) {
+  result: ?any;
+
+  constructor(result: ?any) {
     super('Reject as another request is in the queue');
     // Error.captureStackTrace(this, this.constructor);
     this.name = this.constructor.name;
@@ -10,7 +14,11 @@ export class QueuedPromiseError extends Error {
 export default function queued() {
   let queue = [];
 
-  return ({ processOnlyOnce = false } = {}) => (fn) => {
+  type PropsType = {
+    processOnlyOnce: boolean,
+  }
+
+  return ({ processOnlyOnce = false }: PropsType = {}) => (fn: Function) => {
     const processPromise = isError => (result) => {
       const { resolve, reject } = queue.splice(0, 1)[0];
 
@@ -30,7 +38,7 @@ export default function queued() {
       }
     };
 
-    return function fnWrapper(...args) {
+    return function fnWrapper(...args: []): Promise<any> {
       const callerContext = this;
       return new Promise((resolve, reject) => {
         function execute() {

@@ -26,18 +26,18 @@ import { debounced } from '@panter/promised';
 const apiCall = (p) => Promise.resolve(p);
 
 const debounced = debounce()(apiCall);
-debounced('Debounced call 1').catch((d) => {
+debounced('Debounced call 1').then((d) => {
   console.log(d);
   return d;
 });
 
-debounced('Debounced call 2').catch((d) => {
+debounced('Debounced call 2').then((d) => {
   console.log(d);
   return d;
 });
 
 // console output:
-// Debounced call 1
+// Debounced call 2
 // Debounced call 2
 ```
 
@@ -54,7 +54,7 @@ wrappedCall(new Date().getTime()).catch((start) => {
   return d;
 });
 
-// output will be more then 100
+// output will be >=100
 ```
 
 ## processAfter

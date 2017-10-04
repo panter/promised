@@ -1,4 +1,10 @@
-export default function minDuration({ minTime = 1000 } = {}) {
+// @flow
+
+export type PropsType = {
+  minTime: number,
+}
+
+export default function minDuration({ minTime = 1000 } : PropsType = {}) {
   const processPromise = (cb, startTime) => (result) => {
     const endTime = new Date().getTime();
 
@@ -10,7 +16,7 @@ export default function minDuration({ minTime = 1000 } = {}) {
     }
   };
 
-  return fn => function fnWrapper(...args) {
+  return (fn: Function) => function fnWrapper(...args: []): Promise<any> {
     const callerContext = this;
 
     return new Promise((resolve, reject) => {
