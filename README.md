@@ -41,6 +41,31 @@ debounced('Debounced call 2').then((d) => {
 // Debounced call 2
 ```
 
+## sameResult
+
+``` js
+import { sameResult } from '@panter/promised';
+
+const apiCall = (delay) => return new Promise((resolve) => {
+  setTimeout(() => resolve(v), delay);
+});;
+
+const debounced = sameResult()(apiCall);
+debounced(200).then((d) => {
+  console.log('first');
+  return d;
+});
+
+debounced(10).then((d) => {
+  console.log('second');
+  return d;
+});
+
+// console output:
+// second
+// first
+```
+
 ## minDuration
 
 ``` js
@@ -83,12 +108,12 @@ import { queued } from '@panter/promised';
 
 const queue = queued();
 
-const sequencedCall1 = sequence()((d) => {
+const sequencedCall1 = queue()((d) => {
   return new Promise((resolve) => {
     setTimeout(() => resolve(v), 500);
   });
 });
-const sequencedCall2 = sequence()((d) => Promise.resolve(d));
+const sequencedCall2 = queue()((d) => Promise.resolve(d));
 
 sequencedCall1('a').then((d) => {
   console.log(d);
@@ -164,7 +189,7 @@ mainFunc('main2').then((v) => {
 ## sequence
 
 ``` js
-import { debounce, processAfter } from '@panter/promised';
+import { debounce, processAfter, sequence } from '@panter/promised';
 
 const promised1 = processAfter((d) => d + 10);
 const promised2 = processAfter((d) => d + 10);
