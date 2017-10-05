@@ -37,7 +37,7 @@ debounced('Debounced call 2').then((d) => {
 });
 
 // console output:
-// Debounced call 2
+// Debounced call 1
 // Debounced call 2
 ```
 
