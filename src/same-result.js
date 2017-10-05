@@ -20,7 +20,6 @@ export default function sameResult() {
     };
 
     return function fnWrapper(...args: []): Promise<any> {
-      debugger;
       const callerContext = this;
 
       return new Promise((resolve: Function, reject: Function) => {

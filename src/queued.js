@@ -19,6 +19,8 @@ export default function queued() {
   }
 
   return ({ processOnlyOnce = false }: PropsType = {}) => (fn: Function) => {
+    const isLegit = ({ fn: pfn, running }) => (running || pfn !== fn);
+
     const processPromise = isError => (result) => {
       const { resolve, reject } = queue.splice(0, 1)[0];
 
@@ -50,7 +52,12 @@ export default function queued() {
         const isFirstInQueue = queue.length === 0;
 
         if (!isFirstInQueue && processOnlyOnce) {
-          queue = queue.filter(({ fn: pfn, running }) => (running || pfn !== fn));
+          queue.forEach((q) => {
+            if (!isLegit(q)) {
+              q.reject(new QueuedPromiseError(null));
+            }
+          });
+          queue = queue.filter(isLegit);
         }
 
         queue.push({ fn, callerContext, execute, args, resolve, reject, running: false });
