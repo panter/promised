@@ -3,8 +3,8 @@ const { waitFor } = Promises;
 describe('wairFor', () => {
   it('runs immedialy if no main is running', async () => {
     const waitForFn = waitFor();
-    waitForFn.main(delayedPromiseCall());
-    const waitForMainFunc = waitForFn.addChild(v => Promise.resolve(v));
+    waitForFn.main()(delayedPromiseCall());
+    const waitForMainFunc = waitForFn.addChild()(v => Promise.resolve(v));
     return waitForMainFunc(1).then((d) => {
       expect(d).to.equal(1);
       return d;
@@ -13,7 +13,7 @@ describe('wairFor', () => {
 
   it('runs immedialy if no main specified', async () => {
     const waitForFn = waitFor();
-    const waitForMainFunc = waitForFn.addChild(v => Promise.resolve(v));
+    const waitForMainFunc = waitForFn.addChild()(v => Promise.resolve(v));
     return waitForMainFunc(1).then((d) => {
       expect(d).to.equal(1);
       return d;
@@ -22,8 +22,8 @@ describe('wairFor', () => {
 
   it('wait that main is complete', async () => {
     const waitForFn = waitFor();
-    const mainFunc = waitForFn.main(delayedPromiseCall());
-    const waitForMainFunc = waitForFn.addChild(v => Promise.resolve(v));
+    const mainFunc = waitForFn.main()(delayedPromiseCall());
+    const waitForMainFunc = waitForFn.addChild()(v => Promise.resolve(v));
 
     let mainCalled = 0;
     mainFunc(300).then((d) => {

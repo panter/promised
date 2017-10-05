@@ -5,7 +5,7 @@ export default function waitFor() {
   const queue = [];
 
   return {
-    main(fn: Function) {
+    main() {
       const processPromise = cb => (result) => {
         cb(result);
         mainCount -= 1;
@@ -15,7 +15,7 @@ export default function waitFor() {
         }
       };
 
-      return function fnWrapper(...args: []): Promise<any> {
+      return (fn: Function) => function fnWrapper(...args: []): Promise<any> {
         const callerContext = this;
         return new Promise((resolve, reject) => {
           function execute() {
@@ -28,8 +28,8 @@ export default function waitFor() {
         });
       };
     },
-    addChild(fn: Function) {
-      return function fnWrapper(...args: []): Promise<any> {
+    addChild() {
+      return (fn: Function) => function fnWrapper(...args: []): Promise<any> {
         const callerContext = this;
         return new Promise((resolve, reject) => {
           function execute() {
