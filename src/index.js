@@ -5,7 +5,7 @@ import delay from './delay';
 import wrap from './wrap';
 import retry from './retry';
 import waitFor from './wait-for';
-import sequence from './sequence';
+import flow from './flow';
 
 export default {
   debounce,
@@ -15,5 +15,5 @@ export default {
   wrap,
   retry,
   waitFor,
-  sequence,
+  flow,
 };

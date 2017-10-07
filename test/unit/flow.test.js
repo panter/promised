@@ -1,14 +1,14 @@
-const { sequence, wrap } = Promises;
+const { flow, wrap } = Promises;
 
-describe('sequence', () => {
-  it('calls function in a sequence', async () => {
+describe('flow', () => {
+  it('calls function in a flow', async () => {
     const resolve1 = sinon.spy(d => Promise.resolve(d + 10));
     const promised1 = wrap(resolve1);
 
     const resolve2 = sinon.spy(d => Promise.resolve(d + 10));
     const promised2 = wrap(resolve2);
 
-    const call = sequence([promised1, promised2])(delayedPromiseCall());
+    const call = flow([promised1, promised2])(delayedPromiseCall());
 
     const endValue = await call(10);
 
