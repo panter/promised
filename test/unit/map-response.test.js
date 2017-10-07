@@ -1,8 +1,8 @@
-const { wrap } = Promises;
+const { mapResponse } = Promises;
 
-describe('wrap', () => {
+describe('mapResponse', () => {
   it('resolves the promise if callback return promise', async () => {
-    const call = wrap(
+    const call = mapResponse(
       d => Promise.resolve(d),
       null,
     )(delayedPromiseCall());
@@ -14,7 +14,7 @@ describe('wrap', () => {
   });
 
   it('resolves the promise if callback does not return a promise', async () => {
-    const call = wrap(
+    const call = mapResponse(
       d => d,
       null,
     )(delayedPromiseCall());
@@ -26,7 +26,7 @@ describe('wrap', () => {
   });
 
   it('catches the promise', async () => {
-    const call = wrap(
+    const call = mapResponse(
       null,
       e => e,
     )(d => Promise.reject(d));
@@ -38,7 +38,7 @@ describe('wrap', () => {
   });
 
   it('rejects the promise if callback rejects', async () => {
-    const call = wrap(
+    const call = mapResponse(
       v => Promise.reject(v),
       null,
     )(d => Promise.resolve(d));
@@ -55,12 +55,12 @@ describe('wrap', () => {
     const results = [];
     let call1Done = false;
 
-    const call1 = wrap(
+    const call1 = mapResponse(
       d => d,
       null,
     )(delayedPromiseCall());
 
-    const call2 = wrap(
+    const call2 = mapResponse(
       null,
       e => e,
     )(d => Promise.reject(d));
