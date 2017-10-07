@@ -1,9 +1,9 @@
-const { sameResult } = Promises;
+const { last } = Promises;
 
-describe('sameResult', () => {
+describe('last', () => {
   it('returns a function', async () => {
     const apiCall = v => Promise.resolve(v);
-    const func = sameResult()(apiCall);
+    const func = last()(apiCall);
     return func('a').then((d) => {
       expect(d).to.equal('a');
       return d;
@@ -12,7 +12,7 @@ describe('sameResult', () => {
 
   it('catches rejection', async () => {
     const apiCall = v => Promise.reject(v);
-    const func = sameResult()(apiCall);
+    const func = last()(apiCall);
     return func('a').catch((d) => {
       expect(d).to.equal('a');
       return d;
@@ -21,7 +21,7 @@ describe('sameResult', () => {
 
   it('returns only the last result', async () => {
     const results = [];
-    const func = sameResult()(delayedPromiseCall());
+    const func = last()(delayedPromiseCall());
     const lastTimeout = 50;
 
     const call1 = func(150).then((d) => {

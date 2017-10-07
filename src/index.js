@@ -1,5 +1,5 @@
 import debounce from './debounce';
-import sameResult from './same-result';
+import last from './last';
 import queued from './queued';
 import delay from './delay';
 import wrap from './wrap';
@@ -9,7 +9,7 @@ import sequence from './sequence';
 
 export default {
   debounce,
-  sameResult,
+  last,
   queued,
   delay,
   wrap,

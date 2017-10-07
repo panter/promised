@@ -1,14 +1,14 @@
 // @flow
 
-export default function sameResult() {
+export default function last() {
   return (fn: Function) => {
-    let last = null;
+    let lastId = null;
     const promiseResolve = [];
 
     const processPromise = (isError, time) => (result) => {
-      if (time !== last) { return; }
+      if (time !== lastId) { return; }
 
-      last = null;
+      lastId = null;
       promiseResolve.forEach(({ resolve, reject }) => {
         if (isError) {
           reject(result);
@@ -25,7 +25,7 @@ export default function sameResult() {
       return new Promise((resolve: Function, reject: Function) => {
         function execute() {
           const thisArguments = args;
-          const time = last = new Date().getTime();
+          const time = lastId = new Date().getTime();
 
           fn.apply(this, thisArguments)
             .then(processPromise(false, time))
