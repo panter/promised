@@ -2,7 +2,7 @@ import debounce from './debounce';
 import sameResult from './same-result';
 import queued from './queued';
 import minDuration from './min-duration';
-import processAfter from './process-after';
+import wrap from './wrap';
 import retry from './retry';
 import waitFor from './wait-for';
 import sequence from './sequence';
@@ -12,7 +12,7 @@ export default {
   sameResult,
   queued,
   minDuration,
-  processAfter,
+  wrap,
   retry,
   waitFor,
   sequence,

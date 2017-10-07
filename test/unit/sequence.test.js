@@ -1,12 +1,12 @@
-const { sequence, processAfter } = Promises;
+const { sequence, wrap } = Promises;
 
 describe('sequence', () => {
   it('calls function in a sequence', async () => {
     const resolve1 = sinon.spy(d => Promise.resolve(d + 10));
-    const promised1 = processAfter(resolve1);
+    const promised1 = wrap(resolve1);
 
     const resolve2 = sinon.spy(d => Promise.resolve(d + 10));
-    const promised2 = processAfter(resolve2);
+    const promised2 = wrap(resolve2);
 
     const call = sequence([promised1, promised2])(delayedPromiseCall());
 

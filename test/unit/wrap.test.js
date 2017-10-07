@@ -1,8 +1,8 @@
-const { processAfter } = Promises;
+const { wrap } = Promises;
 
-describe('processAfter', () => {
+describe('wrap', () => {
   it('resolves the promise if callback return promise', async () => {
-    const call = processAfter(
+    const call = wrap(
       d => Promise.resolve(d),
       null,
     )(delayedPromiseCall());
@@ -14,7 +14,7 @@ describe('processAfter', () => {
   });
 
   it('resolves the promise if callback does not return a promise', async () => {
-    const call = processAfter(
+    const call = wrap(
       d => d,
       null,
     )(delayedPromiseCall());
@@ -26,7 +26,7 @@ describe('processAfter', () => {
   });
 
   it('catches the promise', async () => {
-    const call = processAfter(
+    const call = wrap(
       null,
       e => e,
     )(d => Promise.reject(d));
@@ -38,7 +38,7 @@ describe('processAfter', () => {
   });
 
   it('rejects the promise if callback rejects', async () => {
-    const call = processAfter(
+    const call = wrap(
       v => Promise.reject(v),
       null,
     )(d => Promise.resolve(d));
@@ -55,12 +55,12 @@ describe('processAfter', () => {
     const results = [];
     let call1Done = false;
 
-    const call1 = processAfter(
+    const call1 = wrap(
       d => d,
       null,
     )(delayedPromiseCall());
 
-    const call2 = processAfter(
+    const call2 = wrap(
       null,
       e => e,
     )(d => Promise.reject(d));
