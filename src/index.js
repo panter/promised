@@ -1,7 +1,7 @@
 import debounce from './debounce';
 import sameResult from './same-result';
 import queued from './queued';
-import minDuration from './min-duration';
+import delay from './delay';
 import wrap from './wrap';
 import retry from './retry';
 import waitFor from './wait-for';
@@ -11,7 +11,7 @@ export default {
   debounce,
   sameResult,
   queued,
-  minDuration,
+  delay,
   wrap,
   retry,
   waitFor,

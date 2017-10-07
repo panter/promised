@@ -4,7 +4,7 @@ export type PropsType = {
   minTime: number,
 }
 
-export default function minDuration({ minTime = 1000 } : PropsType = {}) {
+export default function delay({ minTime = 1000 } : PropsType = {}) {
   const processPromise = (cb, startTime) => (result) => {
     const endTime = new Date().getTime();
 
