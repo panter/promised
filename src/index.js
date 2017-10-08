@@ -2,6 +2,7 @@ import debounce from './debounce';
 import last from './last';
 import queued from './queued';
 import delay from './delay';
+import mapPromise from './map-promise';
 import mapResponse from './map-response';
 import mapArgs from './map-args';
 import retry from './retry';
@@ -13,6 +14,7 @@ export default {
   last,
   queued,
   delay,
+  mapPromise,
   mapArgs,
   mapResponse,
   retry,

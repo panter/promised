@@ -1,4 +1,4 @@
-export default function mapArgs(map: Function) {
+export default function mapArgs(map: Function<[]>) {
   return (fn: Function) => function apiFunctionWrapper(...args: []) {
     let newArgs;
     try {
