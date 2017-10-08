@@ -41,16 +41,16 @@ debounced('Debounced call 2').then((d) => {
 // Debounced call 2
 ```
 
-## sameResult
+## last
 
 ``` js
-import { sameResult } from '@panter/promised';
+import { last } from '@panter/promised';
 
 const apiCall = (delay) => return new Promise((resolve) => {
   setTimeout(() => resolve(v), delay);
 });;
 
-const debounced = sameResult()(apiCall);
+const debounced = last()(apiCall);
 debounced(200).then((d) => {
   console.log('first');
   return d;
@@ -66,14 +66,14 @@ debounced(10).then((d) => {
 // first
 ```
 
-## minDuration
+## delay
 
 ``` js
-import { minDuration } from '@panter/promised';
+import { delay } from '@panter/promised';
 
 const apiCall = (p) => Promise.resolve(p);
 
-const wrappedCall = minDuration({ minTime: 100 })(apiCall);
+const wrappedCall = delay({ minTime: 100 })(apiCall);
 wrappedCall(new Date().getTime()).catch((start) => {
   console.log(new Date().getTime() - start);
   return d;
@@ -82,12 +82,32 @@ wrappedCall(new Date().getTime()).catch((start) => {
 // output will be >=100
 ```
 
-## processAfter
+## mapPromise
 
 ``` js
-import { processAfter } from '@panter/promised';
+import { mapPromise } from '@panter/promised';
 
-const call = processAfter(
+const call = mapPromise(
+  d => Promise.resolve(d+10),
+  null,
+)((d) => Promise.resolve(d)));
+
+call(50).then((d) => {
+  console.log(d);
+  return d;
+});
+
+// console output:
+// 50
+```
+
+
+## mapResponse
+
+``` js
+import { mapResponse } from '@panter/promised';
+
+const call = mapResponse(
   d => Promise.resolve(d),
   null,
 )((d) => Promise.resolve(d)));
@@ -99,6 +119,26 @@ call(50).then((d) => {
 
 // console output:
 // 50
+```
+
+## mapArgs
+
+``` js
+import { mapArgs } from '@panter/promised';
+
+const call = mapArgs(
+  args => {
+    return [args[0] + 10]
+  },
+)((d) => Promise.resolve(d)));
+
+call(10).then((d) => {
+  console.log(d);
+  return d;
+});
+
+// console output:
+// 20
 ```
 
 ## queued
@@ -186,15 +226,15 @@ mainFunc('main2').then((v) => {
 // waitForFunc
 ```
 
-## sequence
+## flow
 
 ``` js
-import { debounce, processAfter, sequence } from '@panter/promised';
+import { debounce, mapResponse, flow } from '@panter/promised';
 
-const promised1 = processAfter((d) => d + 10);
-const promised2 = processAfter((d) => d + 10);
+const promised1 = mapResponse((d) => d + 10);
+const promised2 = mapResponse((d) => d + 10);
 
-const call = sequence([promised1, promised2])((d) => Promise.resolve(d));
+const call = flow([promised1, promised2])((d) => Promise.resolve(d));
 
 call(0).then((d) => {
   console.log(d);
