@@ -40,6 +40,32 @@ describe('queued', () => {
     const results = [];
     const sequence = queued();
 
+    const sequencedCall1 = sequence({ processOnlyOnce: true })(delayedPromiseCall());
+
+
+    results.push(sequencedCall1(200).catch((error) => {
+      expect(error.result).to.equal(200);
+      return error.result;
+    }));
+
+
+    results.push(sequencedCall1(100).catch((error) => {
+      expect(error.result).to.equal(null);
+      return error.result;
+    }));
+
+    results.push(sequencedCall1(1).then((d) => {
+      expect(d).to.equal(1);
+      return d;
+    }));
+
+    return Promise.all(results);
+  });
+
+  it('processes only once after promise comes back', async () => {
+    const results = [];
+    const sequence = queued();
+
     const sequencedCall1 = sequence()(delayedPromiseCall());
     const sequencedCall2 = sequence({ processOnlyOnce: true })(delayedPromiseCall());
     const sequencedCall3 = sequence()(delayedPromiseCall());

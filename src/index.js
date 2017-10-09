@@ -1,17 +1,25 @@
 import debounce from './debounce';
+import last from './last';
 import queued from './queued';
-import minDuration from './min-duration';
-import processAfter from './process-after';
+import delay from './delay';
+import mapPromise from './map-promise';
+import mapResponse from './map-response';
+import mapArgs from './map-args';
 import retry from './retry';
-import waitFor from './waitFor';
-import sequence from './sequence';
+import waitFor from './wait-for';
+import asEvent from './as-event';
+import flow from './flow';
 
 export default {
   debounce,
+  last,
   queued,
-  minDuration,
-  processAfter,
+  delay,
+  asEvent,
+  mapPromise,
+  mapArgs,
+  mapResponse,
   retry,
   waitFor,
-  sequence,
+  flow,
 };

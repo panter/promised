@@ -19,26 +19,24 @@ describe('debounce', () => {
     });
   });
 
-  it('returns only the last result', async () => {
-    const results = [];
-    const func = debounce({ delay: 200 })(delayedPromiseCall());
-    const lastTimeout = 50;
+  it('returns every debounce', async () => {
+    const func = debounce()(delayedPromiseCall());
+    let call1Done = false;
 
-    const call1 = func(150).then((d) => {
-      expect(d).to.equal(lastTimeout);
+    const call1 = func(350).then((d) => {
+      call1Done = true;
+      expect(d).to.equal(350);
       return d;
     });
-    results.push(call1);
 
     setTimeout(() => {
-      results.push(func(lastTimeout).then((d) => {
-        expect(d).to.equal(lastTimeout);
+      func(10).then((d) => {
+        expect(call1Done).to.be.false;
+        expect(d).to.equal(10);
         return d;
-      }));
+      });
     }, 250);
 
-    await call1;
-
-    return Promise.all(results);
+    return call1;
   });
 });
