@@ -32,12 +32,14 @@ export default function queued() {
         resolve(result);
       }
 
-      if (queue.length > 0) {
-        const { callerContext, execute, args } = queue[0];
+      setTimeout(() => {
+        if (queue.length > 0) {
+          const { callerContext, execute, args } = queue[0];
 
-        queue[0].running = true;
-        execute.apply(callerContext, args);
-      }
+          queue[0].running = true;
+          execute.apply(callerContext, args);
+        }
+      }, 0);
     };
 
     return function fnWrapper(...args: []): Promise<any> {
