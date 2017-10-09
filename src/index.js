@@ -7,6 +7,7 @@ import mapResponse from './map-response';
 import mapArgs from './map-args';
 import retry from './retry';
 import waitFor from './wait-for';
+import asEvent from './as-event';
 import flow from './flow';
 
 export default {
@@ -14,6 +15,7 @@ export default {
   last,
   queued,
   delay,
+  asEvent,
   mapPromise,
   mapArgs,
   mapResponse,
